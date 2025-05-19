@@ -24,7 +24,6 @@ public class Vertex<V> {
     public void setAdjacenctVertices(Map<Vertex<V>, Double> adjacenctVertices) {
         this.adjacenctVertices = adjacenctVertices;
     }
-
     @Override
     public String toString() {
         return data.toString();

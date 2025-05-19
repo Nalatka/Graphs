@@ -26,4 +26,7 @@ public class WeightedGraph<T> {
             vertices.put(v, u);
         }
     }
+    public Vertex<T> getVertex(T key) {
+        return vertices.get(key);
+    }
 }
