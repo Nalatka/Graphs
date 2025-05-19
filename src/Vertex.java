@@ -37,4 +37,8 @@ public class Vertex<V> {
         }
         return false;
     }
+    @Override
+    public int hashCode() {
+        return data.hashCode();
+    }
 }
