@@ -1,53 +1,29 @@
 import java.util.HashMap;
 import java.util.*;
 
-public class WeightedGraph<Vertex> {
+public class WeightedGraph<T> {
     private final boolean undirected;
-    private final Map<Vertex, List<Edge<Vertex>>> map = new HashMap<>();
+    private final Map<T, Vertex<T>> vertices = new HashMap<>();
+
     public WeightedGraph(boolean undirected) {
         this.undirected = undirected;
     }
-    public int size() {
-        return map.size();
+    public WeightedGraph() {
+        this(false);
     }
-    public boolean isEmpty() {
-        return map.isEmpty();
-    }
-    public boolean containsVertex(Vertex vertex) {
-        return map.containsKey(vertex);
-    }
-    public void addVertex(Vertex vertex) {
-        if (containsVertex(vertex)) {
-            return;
-        }
-        map.put(vertex,new LinkedList<>());
-    }
-    public void removeVertex(Vertex vertex) {
-        if (!map.containsKey(vertex)) {
-            return;
-        }
-        map.get(vertex).clear();
-    }
-    public boolean containsEdge(Vertex vertex1, Vertex vertex2) {
-        if (!containsVertex(vertex1)) {
-            return false;
-        }
-        return map.get(vertex1).contains(new Edge<>(vertex1,vertex2));
-    }
-    public void addEdge(Vertex source, Vertex target, double weight) {
-        if (containsVertex(source)) {
-            addVertex(source);
-        }
-        if (containsVertex(target)) {
-            addVertex(target);
-        }
-        if(containsEdge(source,target)) {
-            return;
-        }
-        map.get(source).add(new Edge<>(source,target,weight));
-        if (undirected) {
-            map.get(target).add(new Edge<>(target,source,weight));
+   public void addEdge(T from, T to, double weight) {
+        Vertex<T> fromVertex = vertices.get(from);
+        Vertex<T> toVertex = vertices.get(to);
+       fromVertex.addAdjacentVertex(toVertex,weight);
+       if (!undirected) {
+           toVertex.addAdjacentVertex(fromVertex,weight);
+       }
+   }
+    public void addVertex(T v) {
+        Vertex<T> u = vertices.get(v);
+        if (u == null) {
+            u = new Vertex<>(v);
+            vertices.put(v, u);
         }
     }
-
 }
